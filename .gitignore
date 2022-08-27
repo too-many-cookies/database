@@ -1,1 +1,5 @@
+# Code scanning cache
 .dccache
+
+# DataGrip/Jet Brains project files
+.idea/
