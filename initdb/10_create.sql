@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS operational_analytics.professor_info
 CREATE TABLE IF NOT EXISTS operational_analytics.semester_info
 (
     `semester_id`   INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'primary key',
-    `semester_code` INT          NULL DEFAULT NULL COMMENT,
+    `semester_code` INT          NULL DEFAULT NULL,
     `name`          VARCHAR(10)  NULL DEFAULT NULL,
     PRIMARY KEY (semester_id)
 )
