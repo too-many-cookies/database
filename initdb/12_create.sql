@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS operational_analytics.class_info
     `name`                 VARCHAR(255) NULL DEFAULT NULL,
     `class_code`           VARCHAR(10)  NULL DEFAULT NULL,
     `class_section_number` INT          NULL DEFAULT NULL,
+    `student_signin_count` INT          NULL DEFAULT NULL,
+    `total_student_count`  INT          NULL DEFAULT NULL,
     PRIMARY KEY (class_id)
 )
     ENGINE = InnoDB
@@ -123,7 +125,7 @@ CREATE TABLE IF NOT EXISTS operational_analytics.student_class_instance
     DEFAULT CHARACTER SET = utf8mb3;
 
 
-CREATE TABLE IF NOT EXISTS operational_analytics.upload_logs
+/*CREATE TABLE IF NOT EXISTS operational_analytics.upload_logs
 (
     `log_id`            INT             NOT NULL,
     `upload_logs_id`    INT             NOT NULL,
@@ -137,7 +139,7 @@ CREATE TABLE IF NOT EXISTS operational_analytics.upload_logs
             REFERENCES operational_analytics.`logs` (log_id)
 )
     ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb3;
+    DEFAULT CHARACTER SET = utf8mb3;*/
 
 
 SET SQL_MODE = @OLD_SQL_MODE;
