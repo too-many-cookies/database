@@ -133,18 +133,18 @@ DROP TABLE IF EXISTS `operational_analytics`.`professor_class_instance` ;
 
 CREATE TABLE IF NOT EXISTS `operational_analytics`.`professor_class_instance` (
   `professor_class_instance_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `class_info_class_id` INT UNSIGNED NOT NULL,
-  `professor_info_professor_id` INT UNSIGNED NOT NULL,
+  `class_id` INT UNSIGNED NOT NULL,
+  `professor_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`professor_class_instance_id`),
-  INDEX `fk_professor_class_instance_class_info_idx` (`class_info_class_id` ASC) VISIBLE,
-  INDEX `fk_professor_class_instance_professor_info1_idx` (`professor_info_professor_id` ASC) VISIBLE,
+  INDEX `fk_professor_class_instance_class_info_idx` (`class_id` ASC) VISIBLE,
+  INDEX `fk_professor_class_instance_professor_info1_idx` (`professor_id` ASC) VISIBLE,
   CONSTRAINT `fk_professor_class_instance_class_info`
-    FOREIGN KEY (`class_info_class_id`)
+    FOREIGN KEY (`class_id`)
     REFERENCES `operational_analytics`.`class_info` (`class_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_professor_class_instance_professor_info1`
-    FOREIGN KEY (`professor_info_professor_id`)
+    FOREIGN KEY (`professor_id`)
     REFERENCES `operational_analytics`.`professor_info` (`professor_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
