@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`logs` (
   `log_type` CHAR(1) NULL DEFAULT NULL,
   `username` VARCHAR(255) NULL DEFAULT NULL,
   `timestamp` DATE NULL DEFAULT NULL,
-  `successful` ENUM('Y', 'N') NULL,
+  `successful` ENUM('Y', 'N') NULL DEFAULT NULL,
   PRIMARY KEY (`log_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
@@ -85,6 +85,34 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
+-- Table `operational_analytics`.`professor_class_instance`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `operational_analytics`.`professor_class_instance` ;
+
+CREATE TABLE IF NOT EXISTS `operational_analytics`.`professor_class_instance` (
+  `professor_class_instance_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `class_id` INT UNSIGNED NOT NULL,
+  `professor_id` INT UNSIGNED NOT NULL,
+  `active` ENUM('A', 'I') NOT NULL DEFAULT 'I',
+  PRIMARY KEY (`professor_class_instance_id`),
+  INDEX `fk_professor_class_instance_class_info_idx` (`class_id` ASC) VISIBLE,
+  INDEX `fk_professor_class_instance_professor_info1_idx` (`professor_id` ASC) VISIBLE,
+  CONSTRAINT `fk_professor_class_instance_class_info`
+    FOREIGN KEY (`class_id`)
+    REFERENCES `operational_analytics`.`class_info` (`class_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_professor_class_instance_professor_info1`
+    FOREIGN KEY (`professor_id`)
+    REFERENCES `operational_analytics`.`professor_info` (`professor_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `operational_analytics`.`student_info`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `operational_analytics`.`student_info` ;
@@ -92,10 +120,11 @@ DROP TABLE IF EXISTS `operational_analytics`.`student_info` ;
 CREATE TABLE IF NOT EXISTS `operational_analytics`.`student_info` (
   `student_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'primary key',
   `name` VARCHAR(255) NULL DEFAULT NULL,
-  `username` VARCHAR(255) NULL DEFAULT NULL,
+  `username` VARCHAR(255) NOT NULL,
   `password_changed` ENUM('Y', 'N') NULL DEFAULT NULL,
   `last_sign_in` DATE NULL DEFAULT NULL,
-  PRIMARY KEY (`student_id`))
+  PRIMARY KEY (`student_id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -112,43 +141,18 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`student_class_info` (
   PRIMARY KEY (`student_class_info_id`, `student_id`, `class_id`),
   INDEX `fk_student_info_has_class_info_class_info1_idx` (`class_id` ASC) VISIBLE,
   INDEX `fk_student_info_has_class_info_student_info1_idx` (`student_id` ASC) VISIBLE,
-  CONSTRAINT `fk_student_info_has_class_info_student_info1`
-    FOREIGN KEY (`student_id`)
-    REFERENCES `operational_analytics`.`student_info` (`student_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
   CONSTRAINT `fk_student_info_has_class_info_class_info1`
     FOREIGN KEY (`class_id`)
     REFERENCES `operational_analytics`.`class_info` (`class_id`)
     ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_student_info_has_class_info_student_info1`
+    FOREIGN KEY (`student_id`)
+    REFERENCES `operational_analytics`.`student_info` (`student_id`)
+    ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `operational_analytics`.`professor_class_instance`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `operational_analytics`.`professor_class_instance` ;
-
-CREATE TABLE IF NOT EXISTS `operational_analytics`.`professor_class_instance` (
-  `professor_class_instance_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `class_id` INT UNSIGNED NOT NULL,
-  `professor_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`professor_class_instance_id`),
-  INDEX `fk_professor_class_instance_class_info_idx` (`class_id` ASC) VISIBLE,
-  INDEX `fk_professor_class_instance_professor_info1_idx` (`professor_id` ASC) VISIBLE,
-  CONSTRAINT `fk_professor_class_instance_class_info`
-    FOREIGN KEY (`class_id`)
-    REFERENCES `operational_analytics`.`class_info` (`class_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_professor_class_instance_professor_info1`
-    FOREIGN KEY (`professor_id`)
-    REFERENCES `operational_analytics`.`professor_info` (`professor_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
