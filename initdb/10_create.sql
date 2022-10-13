@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`semester_info` (
   `name` VARCHAR(10) NULL DEFAULT NULL,
   PRIMARY KEY (`semester_id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -50,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`class_info` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -60,7 +62,6 @@ DROP TABLE IF EXISTS `operational_analytics`.`logs` ;
 
 CREATE TABLE IF NOT EXISTS `operational_analytics`.`logs` (
   `log_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `log_type` CHAR(1) NULL DEFAULT NULL,
   `username` VARCHAR(255) NULL DEFAULT NULL,
   `timestamp` DATE NULL DEFAULT NULL,
   `successful` ENUM('Y', 'N') NULL DEFAULT NULL,
@@ -81,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`professor_info` (
   `password` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`professor_id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -108,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`professor_class_instance` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -121,11 +124,10 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`student_info` (
   `student_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'primary key',
   `name` VARCHAR(255) NULL DEFAULT NULL,
   `username` VARCHAR(255) NOT NULL,
-  `password_changed` ENUM('Y', 'N') NULL DEFAULT NULL,
-  `last_sign_in` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`student_id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 31
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -138,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`student_class_info` (
   `student_class_info_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `student_id` INT UNSIGNED NOT NULL,
   `class_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`student_class_info_id`, `student_id`, `class_id`),
+  PRIMARY KEY (`student_class_info_id`),
   INDEX `fk_student_info_has_class_info_class_info1_idx` (`class_id` ASC) VISIBLE,
   INDEX `fk_student_info_has_class_info_student_info1_idx` (`student_id` ASC) VISIBLE,
   CONSTRAINT `fk_student_info_has_class_info_class_info1`
@@ -152,6 +154,7 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`student_class_info` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 46
 DEFAULT CHARACTER SET = utf8mb3;
 
 
