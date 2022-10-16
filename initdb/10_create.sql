@@ -43,8 +43,6 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`class_info`
     `name`                 VARCHAR(255) NULL DEFAULT NULL,
     `class_code`           VARCHAR(10)  NULL DEFAULT NULL,
     `class_section_number` INT          NULL DEFAULT NULL,
-    `student_signin_count` INT          NULL DEFAULT NULL,
-    `total_student_count`  INT          NULL DEFAULT NULL,
     PRIMARY KEY (`class_id`),
     INDEX `fk_class_info_semester_info1_idx` (`semester_id` ASC) VISIBLE,
     CONSTRAINT `fk_class_info_semester_info1`
