@@ -195,10 +195,10 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`signin_alerts` (
   `username` VARCHAR(255) NOT NULL,
   `date` DATE NULL,
   `failed_count` INT NULL,
-  PRIMARY KEY (`signin_alerts_id`)),
+  PRIMARY KEY (`signin_alerts_id`),
   CONSTRAINT `fk_alerts_student_info`
     FOREIGN KEY (`username`)
-    REFERENCES `operational_analytics`.`student_info` (`username`)
+    REFERENCES `operational_analytics`.`student_info` (`username`))
 ENGINE = InnoDB;
 
 
