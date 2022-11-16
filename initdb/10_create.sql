@@ -14,7 +14,6 @@ DROP SCHEMA IF EXISTS `operational_analytics` ;
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `operational_analytics` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `operational_analytics` ;
-
 -- -----------------------------------------------------
 -- Table `operational_analytics`.`semester_info`
 -- -----------------------------------------------------
@@ -197,6 +196,9 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`signin_alerts` (
   `date` DATE NULL,
   `failed_count` INT NULL,
   PRIMARY KEY (`signin_alerts_id`))
+  CONSTRAINT `fk_alerts_student_info`
+    FOREIGN KEY (`username`)
+    REFERENCES `operational_analytics`.`student_info` (`username`))
 ENGINE = InnoDB;
 
 
