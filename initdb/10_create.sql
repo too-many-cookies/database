@@ -209,10 +209,11 @@ DROP TABLE IF EXISTS `operational_analytics`.`signin_alerts`;
 
 CREATE TABLE IF NOT EXISTS `operational_analytics`.`signin_alerts`
 (
-    `signin_alerts_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `username`         VARCHAR(255) NOT NULL,
-    `date`             DATE         NULL,
-    `failed_count`     INT          NULL,
+    `signin_alerts_id` INT UNSIGNED    NOT NULL AUTO_INCREMENT,
+    `username`         VARCHAR(255)    NOT NULL,
+    `date`             DATE            NULL,
+    `failed_count`     INT             NULL,
+    `read_flag`        ENUM ('N', 'Y') NOT NULL DEFAULT 'N',
     PRIMARY KEY (`signin_alerts_id`),
     CONSTRAINT `fk_alerts_student_info`
         FOREIGN KEY (`username`)
