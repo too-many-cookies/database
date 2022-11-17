@@ -231,7 +231,7 @@ CREATE TRIGGER `operational_analytics`.`update_alert_table`
     FOR EACH ROW
     IF
         (SELECT count(*)
-          FROM (SELECT successful FROM logs WHERE username = NEW.username ORDER BY timestamp limit 3) AS t
+          FROM (SELECT successful FROM logs WHERE username = NEW.username ORDER BY timestamp LIMIT 3) AS t
           WHERE t.successful = 'N') >= 3
     THEN
         INSERT INTO `operational_analytics`.`signin_alerts` (username, date, failed_count)
