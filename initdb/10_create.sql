@@ -223,6 +223,25 @@ CREATE TABLE IF NOT EXISTS `operational_analytics`.`signin_alerts`
     DEFAULT CHARACTER SET = utf8mb3;
 
 
+DROP TRIGGER IF EXISTS `operational_analytics`.`update_alert_table`;
+
+CREATE TRIGGER `operational_analytics`.`update_alert_table`
+    AFTER INSERT
+    ON `operational_analytics`.`logs`
+    FOR EACH ROW
+    IF
+        (SELECT count(*)
+          FROM (SELECT successful FROM logs WHERE username = NEW.username ORDER BY timestamp limit 3) AS t
+          WHERE t.successful = 'N') >= 3
+    THEN
+        INSERT INTO `operational_analytics`.`signin_alerts` (username, date, failed_count)
+        VALUES (NEW.username, CURDATE(), (SELECT COUNT(successful)
+                                          FROM logs
+                                          WHERE username = NEW.username
+                                            AND successful = 'N'));
+    END IF;
+
+
 SET SQL_MODE = @OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
